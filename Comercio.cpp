@@ -46,6 +46,24 @@ void Comercio::RuPrede(){
 	agregarRutas(ruta3);
 }
 
+void Comercio::materiaProvePrede(){
+	
+	Proveedor* prove1 = new Proveedor("Gallito");
+	Proveedor* prove2 = new Proveedor("DosPinos");
+	
+	MateriaPrima* mate1 = new MateriaPrima(13,"Morenitos",prove1,10);
+	MateriaPrima* mate2 = new MateriaPrima(70,"Tapitas",prove1,300);
+	MateriaPrima* mate3 = new MateriaPrima(20,"FrescoLeche",prove2,500);
+	
+	agregarProveedor(prove1);
+	agregarProveedor(prove2);
+	
+	agregarMateriaPrima(mate1);
+	agregarMateriaPrima(mate2);
+	agregarMateriaPrima(mate3);
+	
+}
+
 void Comercio::agregarMateriaPrima(MateriaPrima* materiaPrima) {
 	materiasPrimas->agregarMateriaPrima(materiaPrima);
 }

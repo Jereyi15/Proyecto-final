@@ -4,13 +4,6 @@ using namespace std;
 
 int main () {
 	
-	/*
-	
-	ATENCION YULI TIENE QUE HACER QUE SE GUARDE MATERIA PRIMA, SOLO FIJISES
-	PORQUE NO SE ESTA GUARDANDO BIEN, SEGURO ES ALGO QUE ESTA MAL PUESTO
-	PERO SI CHOFER SE PUEDE MATERIA TAMBIEN, TEQUIERO MUCHA SUERTE ME VOY A COMER
-	
-	*/
 	Comercio* comercio = new Comercio();
 	int opc = 0, a = 0;
 	string nombreProvedor, nombreChofer, nombreRuta, nombreMateria;
@@ -21,6 +14,7 @@ int main () {
 	MateriaPrima* materia;
 	
 	comercio->RuPrede();
+	comercio->materiaProvePrede();
 	
 	for(;;){
 		
@@ -58,31 +52,42 @@ int main () {
 			cout<<"Cantidad de este producto que se va a registrar: ";
 			cin>>cantidadMateria;
 			
-			while(cantidadMateria<20){
+			if(cantidadMateria>=20){
+				materia = new MateriaPrima(cantidadMateria,nombreMateria,proveedor,precioMateria);
+				comercio->agregarMateriaPrima(materia);
 				
-				cout<<"Cantidad de articulos no permitida.\n";
-				cout<<"Si quiere volver a intentarlo digite 1, digite cualquier otro numero para cancerla la operacion.\n";
-				cin>>a;
+				cout<<"\nProveedor y articulos agregados con exito al inventario.\n";
 				
-				if(a==1){
-					cout<<"ADVERTENCIA: Se tiene que agregar un minimo de 20 unidades por producto.\n";
-					cout<<"Cantidad de este producto que se va a registrar: ";
-					cin>>cantidadMateria;
+				cout<<comercio->listadoProveedores();
+				cout<<endl;
+				cout<<comercio->listadoMateriaPrima();
+			}else{
+				while(cantidadMateria<20){
+				
+					cout<<"Cantidad de articulos no permitida.\n";
+					cout<<"Si quiere volver a intentarlo digite 1, digite cualquier otro numero para cancerla la operacion.\n";
+					cin>>a;
 					
-					materia = new MateriaPrima(cantidadMateria,nombreMateria,proveedor,precioMateria);
-					comercio->agregarMateriaPrima(materia);
-					
-					cout<<"\nProveedor y articulos agregados con exito al inventario.\n";
-					
-					cout<<comercio->listadoProveedores();
-					cout<<endl;
-					cout<<comercio->listadoMateriaPrima();
-					
-					
-				}else{
-					break;
+					if(a==1){
+						cout<<"ADVERTENCIA: Se tiene que agregar un minimo de 20 unidades por producto.\n";
+						cout<<"Cantidad de este producto que se va a registrar: ";
+						cin>>cantidadMateria;
+						
+						materia = new MateriaPrima(cantidadMateria,nombreMateria,proveedor,precioMateria);
+						comercio->agregarMateriaPrima(materia);
+						
+						cout<<"\nProveedor y articulos agregados con exito al inventario.\n";
+						
+						cout<<comercio->listadoProveedores();
+						cout<<endl;
+						cout<<comercio->listadoMateriaPrima();
+						
+						
+					}else{
+						break;
 				}
 				
+			}
 			}
 			system("pause");
 			break;
@@ -105,7 +110,7 @@ int main () {
 				comercio->agregarRutas(ruta);
 			}
 			
-			chofer = new Chofer(nombreChofer,ruta); //esto despues
+			chofer = new Chofer(nombreChofer,ruta);
 			comercio->agregarChofer(chofer);
 			
 			cout<<"El chofer "<<chofer->getNombre()<<" con ruta hacia "<<ruta->getNombre()<<" fue agregado correctamente.\n";
@@ -114,7 +119,9 @@ int main () {
 			break;
 		case 3:
 			system("cls");
+			cout<<"Venta:\n";
 			cout<<comercio->listadoMateriaPrima()<<endl;
+			
 			cout<<"Digite el nombre del articulo que quiere vender: ";
 			cin>>nombreMateria;
 			materia = comercio->recuperarMateria(nombreMateria);
@@ -125,7 +132,7 @@ int main () {
 			cout<<"Cuanta existencia desea vender: \n";
 			cin>>cantVenta;
 			
-			cout<<comercio->venta(nombreMateria,cantVenta);
+			cout<<"Ganancia de la venta: "<<comercio->venta(nombreMateria,cantVenta)<<"$.\n";
 			
 			system("pause");
 			break;
@@ -139,7 +146,7 @@ int main () {
 			break;
 		case 5:
 			system("cls");
-			cout<<"\nListado de choferes.\n";
+			cout<<"Listado de choferes.\n";
 			cout<<comercio->listadoChoferes();
 			cout<<"\nListado de Rutas.\n";
 			cout<<comercio->listadoRutas();

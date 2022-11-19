@@ -17,6 +17,7 @@ public:
 	
 	void agregarProveedor(Proveedor*);
 	string listadoProveedores();
+	void materiaProvePrede();
 	
 	void agregarRutas(Rutas*);
 	string listadoRutas();
